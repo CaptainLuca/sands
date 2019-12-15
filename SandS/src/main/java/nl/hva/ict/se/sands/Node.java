@@ -41,4 +41,9 @@ public class Node implements Comparable<Node> {
         return character;
     }
 
+    public boolean isLeaf(){
+        assert ((left == null) && (right == null)) || ((left != null) && (right != null));
+        return (left == null) && (right == null);
+    }
+
 }
