@@ -10,7 +10,7 @@ public class MyTest {
 
     @BeforeEach
     public void setup() {
-        compressor = new HuffmanCompression("afdljkbdjklfeijfdsnafdkbujdjfdksalkdfjdsa");
+        compressor = new HuffmanCompression("ThomasBronseveld");
     }
 
     @Test

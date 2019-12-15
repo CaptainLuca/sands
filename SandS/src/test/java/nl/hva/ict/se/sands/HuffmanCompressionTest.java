@@ -38,7 +38,9 @@ public class HuffmanCompressionTest {
     @Test
     public void checkSimpleCompressionRatio() {
         compressor = new HuffmanCompression("aba");
-
+        //eerst 24 bits
+        //met huffmancompressie: blijkbaar 3 aba: 101
+        //a:1 b:0
         assertEquals(0.125,compressor.getCompressionRatio(), 0.0001);
     }
 

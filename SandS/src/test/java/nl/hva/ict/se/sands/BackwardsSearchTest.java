@@ -33,4 +33,11 @@ public class BackwardsSearchTest {
 
         assertEquals(6, searchEngine.getComparisonsForLastSearch());
     }
+
+    @Test
+    public void simpleCharacterCount2() {
+        searchEngine.findLocation("needle", "whereistheneedlenow");
+
+        assertEquals(9, searchEngine.getComparisonsForLastSearch());
+    }
 }

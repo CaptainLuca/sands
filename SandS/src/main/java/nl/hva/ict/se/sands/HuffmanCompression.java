@@ -6,7 +6,7 @@ import java.util.*;
 public class HuffmanCompression {
     private final String text;
     private final int byteMax = 256;
-    public Character[] CHARACTERS = {'a', 'b', 'c','d', 'e', 'f','g', 'h', 'i','j', 'k', 'l','m', 'n', 'o','p', 'q', 'r','s', 't', 'u','v', 'w', 'x','y', 'z'};
+
     public HuffmanCompression(String text) {
         this.text = text;
     }
@@ -22,7 +22,13 @@ public class HuffmanCompression {
      * @return the compression ratio.
      */
     public double getCompressionRatio() {
-        return 0.0;
+        //uncompressed size is text.size * 8
+        int beforeCompression = text.length() * 8;
+        int afterCompressionLength = 0;
+        for(int i = 0; i< text.length(); i++){
+            afterCompressionLength+=1;
+        }
+        return (double)afterCompressionLength/beforeCompression;
     }
 
     /**
@@ -92,7 +98,12 @@ public class HuffmanCompression {
                 end = node;
             }else{
                 current = root;
-
+                while(current.getLinker() != null){
+                    current = current.getLinker();
+                }
+                current.setLinker(node);
+                current.setLinkerBack(current);
+                end = node;
             }
         }
 
@@ -117,6 +128,8 @@ public class HuffmanCompression {
 //
         return "";
     }
+
+
 
     /**
      * Returns the root of the compression tree.
