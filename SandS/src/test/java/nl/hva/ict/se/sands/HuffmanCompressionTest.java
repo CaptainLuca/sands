@@ -24,8 +24,31 @@ public class HuffmanCompressionTest {
 
         Node left = compressionTree.getLeft();
         Node right = compressionTree.getRight();
+        System.out.println(left.getWeight());
         assertEquals(1, left.getWeight());
         assertEquals(2, right.getWeight());
+    }
+    @Test
+    public void checkWeightSample2() {
+        compressor = new HuffmanCompression("aaabbbbcdefghijkfadlmnopqrstuvwxyz");
+
+        Node compressionTree = compressor.getCompressionTree();
+
+        assertEquals(29, compressionTree.getWeight());
+
+        Node left = compressionTree.getLeft();
+        Node right = compressionTree.getRight();
+    }
+    @Test
+    public void checkWeightSample3() {
+        compressor = new HuffmanCompression("aaaaaaaabbbbbb");
+
+        Node compressionTree = compressor.getCompressionTree();
+
+        assertEquals(14, compressionTree.getWeight());
+
+        Node left = compressionTree.getLeft();
+        Node right = compressionTree.getRight();
     }
 
     @Test

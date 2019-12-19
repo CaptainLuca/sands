@@ -8,7 +8,7 @@ public class Node implements Comparable<Node> {
     private Node right;
     private int weight;
     private Character character;
-    private Node linker, linkerBack;
+    public Node linker, linkerBack;
 
     public Node(int weight, Character c) {
         this.weight = weight;
@@ -21,23 +21,10 @@ public class Node implements Comparable<Node> {
         this.right = right;
     }
 
-    public Node getLinker(){
-        return linker;
-    }
-    public void setLinker(Node node){
-        linker = node;
-    }
-    public void setLinkerBack(Node node){
-        linker.linkerBack = node;
-    }
-
-    public Node getLinkerBack(){
-        return linkerBack;
-    }
 
     @Override
     public int compareTo(Node o) {
-        return 0;
+        return this.getWeight() - o.getWeight();
     }
 
     public Node getLeft() {
@@ -50,6 +37,9 @@ public class Node implements Comparable<Node> {
 
     public int getWeight() {
         return weight;
+    }
+    public void correctWeight(){
+        this.weight-=1;
     }
 
     public Character getCharacter() {

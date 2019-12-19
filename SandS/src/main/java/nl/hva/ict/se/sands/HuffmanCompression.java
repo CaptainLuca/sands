@@ -35,6 +35,14 @@ public class HuffmanCompression {
      * Compresses the text that was provided to the constructor.
      * @return
      */
+    Node root = null;
+    Node current = null;
+    Node tempRoot = null;
+
+
+
+    Node lowest = null;
+    Node lowest2 = null;
     public String compress() {
         char[] msgChar = text.toCharArray();
         ArrayList<Character> characters = new ArrayList<Character>();
@@ -69,7 +77,7 @@ public class HuffmanCompression {
 
         for(int i = 0; i<countOfChar.length -1; i++){
             for(int j = 0; j < countOfChar.length -1; j++){
-                if(countOfChar[j]<countOfChar[j+1]){
+                if(countOfChar[j]>countOfChar[j+1]){
                     int temp = countOfChar[j];
                     countOfChar[j] = countOfChar[j+1];
                     countOfChar[j +1] = temp;
@@ -87,47 +95,57 @@ public class HuffmanCompression {
         }
 
         //Bouw de boom/trie/tree?
-        Node root = null;
-        Node current = null;
-        Node end = null;
 
-        for(int i = 0; i< countOfChar.length;i++){
+        for(int i = 0; i < countOfChar.length; i++){
+            //t
             Node node = new Node(countOfChar[i], characters.get(i));
-            if(root == null){
-                root = node;
-                end = node;
-            }else{
-                current = root;
-                while(current.getLinker() != null){
-                    current = current.getLinker();
+            System.out.println("Node: " + characters.get(i) + "  weight: " + countOfChar[i]);
+            tempRoot = root;
+            System.out.println("i: " +i);
+
+            if(!(lowest==null && lowest2 == null)){
+                if(root == null){
+                    //Maak een root van de twee laagste
+                    root = new Node(lowest, lowest2);
                 }
-                current.setLinker(node);
-                current.setLinkerBack(current);
-                end = node;
+                //Controleer of de weight van de Root kleiner of gelijk is dan het gewicht d
+                //Als de node groter is dan de root, dan  maak je een nieuwe losse Trie
+                if (root.getWeight() >= node.getWeight()){
+                    //Voeg node toe aan root
+                    root = new Node(node, tempRoot);
+                }else{
+                    //Controleer of er nog minimaal 2 charactesr over zijn
+                    if(characters.size() - i > 1) {
+                        //Nieuwe Trie maken van de 2 laagste nodes
+                        lowest = node;
+                        lowest2 = new Node(countOfChar[i + 1], characters.get(i + 1));
+                        i++;
+                        //vgm nu weer nieuwe maken
+                        root = new Node(lowest, lowest2);
+                    }else{
+                        //Maak een nieuwe Trie met 1 node en de tempRoot
+                        root = new Node(node, tempRoot);
+                    }
+                }
             }
+            else{
+                lowest = node;
+                lowest2 = new Node(countOfChar[i + 1], characters.get(i + 1));
+                root = new Node(lowest, lowest2);
+                System.out.println("new Root added: " + root.getWeight());
+            }
+
+
+
         }
-
-
-
-
-
-//        char[] input = text.toCharArray();
-//        System.out.println("input");
-//        for(Character ch : input){
-//            System.out.print(ch);
-//        }
-//        // tabulate frequency counts
-//        int[] freq = new int[byteMax];
-//        System.out.println("Freq");
-//        for(Integer ch : freq){
-//            System.out.print(ch);
-//        }
-//        for (int i = 0; i < input.length; i++)
-//            freq[input[i]]++;
-//
-//
+        //Voor een reden geeft als totale weight steeds 1 teveel terug. Daarom roepen we de methode correctWeight() aan
+        //om dit te fixen
+        root.correctWeight();
         return "";
     }
+
+
+
 
 
 
@@ -136,7 +154,8 @@ public class HuffmanCompression {
      * @return the root of the compression tree.
      */
     Node getCompressionTree() {
-        return null;
+        compress();
+        return root;
     }
 
     /**
