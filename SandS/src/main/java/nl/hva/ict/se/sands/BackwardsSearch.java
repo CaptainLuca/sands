@@ -12,44 +12,43 @@ public class BackwardsSearch {
      */
     int findLocation(String needle, String haystack) {
 
-        int index = haystack.length() - needle.length();
-        boolean found = false;
+        int N = haystack.length();
+        int M = needle.length();
+        int r = 256;
+        int[] right = new int[r];
 
-        System.out.println(haystack.charAt(index));
-        while(!found){
+        for (int c = 0; c < r ; c++) {
+            right[c] = -1;
+        }
 
-            if(index < 0){
-                break;
-            }
-            char letter = haystack.charAt(index);
+        for (int k = 0; k < M; k++) {
+            right[needle.charAt(k)] = k;
+        }
 
-            if(!needle.contains(Character.toString(letter))){
+        int skip;
+        amountOfComparisons = 0;
+        for (int i = N-M; i > 0 ; i -= skip)
+        {
+            skip = 0;
+            for (int j = 0; j < M; j++)  {
                 amountOfComparisons++;
-                index = index - needle.length();
-            } else if (needle.contains(Character.toString(letter))){
-                if(needle.charAt(0) != letter) {
-                    amountOfComparisons++;
-                    index--;
-                } else {
-                    for(int i = 0; i < needle.length(); i++){
-                        amountOfComparisons++;
-                        if(!(needle.charAt(i) == haystack.charAt(index + i))){
-                            index -= needle.length() - i;
-                            break;
-                        }
-                        if(i == needle.length() - 1){
-                            found = true;
-                            return index;
-                        }
-                    }
+                if (needle.charAt(j) != haystack.charAt(i+j))
+                {
+                    skip = j - right[haystack.charAt(i+j)];
+                    if (skip < 1) skip = 1;
+                    break;
                 }
             }
-        }
-        return -1;
-    }
 
-    public void setAmountOfComparisons(int amountOfComparisons) {
-        this.amountOfComparisons = amountOfComparisons;
+            if (skip == 0) {
+                System.out.println("Number of comparisons: " + amountOfComparisons);
+                return i;
+            }
+        }
+
+        System.out.println("Number of comparisons: " + amountOfComparisons);
+        return -1;
+
     }
 
     /**
