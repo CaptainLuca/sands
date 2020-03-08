@@ -24,9 +24,8 @@ public class HuffmanCompressionTest {
 
         Node left = compressionTree.getLeft();
         Node right = compressionTree.getRight();
-        System.out.println(left.getWeight());
-        assertEquals(1, left.getWeight());
-        assertEquals(2, right.getWeight());
+        assertEquals(1, right.getWeight());
+        assertEquals(2, left.getWeight());
     }
     @Test
     public void checkWeightSample2() {
@@ -60,7 +59,7 @@ public class HuffmanCompressionTest {
 
     @Test
     public void checkSimpleCompressionRatio() {
-        compressor = new HuffmanCompression("aba");
+        compressor = new HuffmanCompression("abracadabra");
         //eerst 24 bits
         //met huffmancompressie: blijkbaar 3 aba: 101
         //a:1 b:0

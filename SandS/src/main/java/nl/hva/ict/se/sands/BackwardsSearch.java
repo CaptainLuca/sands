@@ -12,34 +12,36 @@ public class BackwardsSearch {
      */
     int findLocation(String needle, String haystack) {
 
-        int N = haystack.length();
-        int M = needle.length();
+        int text = haystack.length();
+        int pattern = needle.length();
         int r = 256;
-        int[] right = new int[r];
+        int[] left = new int[r];
 
         for (int c = 0; c < r ; c++) {
-            right[c] = -1;
+            left[c] = needle.length();
         }
 
-        for (int k = 0; k < M; k++) {
-            right[needle.charAt(k)] = k;
+        for (int k = needle.length() - 1; k >= 0; k--) {
+            left[needle.charAt(k)] = k;
         }
 
         int skip;
         amountOfComparisons = 0;
-        for (int i = N-M; i > 0 ; i -= skip)
+
+
+        for (int i = text-pattern; i >= 0 ; i -= skip)
         {
             skip = 0;
-            for (int j = 0; j < M; j++)  {
+            for (int j = 0; j <= pattern -1; j++)  {
                 amountOfComparisons++;
                 if (needle.charAt(j) != haystack.charAt(i+j))
                 {
-                    skip = j - right[haystack.charAt(i+j)];
-                    if (skip < 1) skip = 1;
+//                    skip = j - left[haystack.charAt(i+j)];
+                    skip = Math.min(pattern, left[haystack.charAt(i+j)]);
+//                    System.out.println("Skip: " + skip)
                     break;
                 }
             }
-
             if (skip == 0) {
                 System.out.println("Number of comparisons: " + amountOfComparisons);
                 return i;
