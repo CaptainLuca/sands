@@ -3,7 +3,7 @@ package nl.hva.ict.se.sands;
 import java.io.InputStream;
 import java.util.*;
 
-public class HuffmanCompression implements Comparator<Node> {
+public class HuffmanCompression {
 
     private static Map<Character, String> charPrefixHashMap = new HashMap<>();
     static Node root;
@@ -66,7 +66,7 @@ public class HuffmanCompression implements Comparator<Node> {
     }
 
     private static Node buildTree(Map<Character, Integer> weight) {
-        PriorityQueue<Node> priorityQueue = new PriorityQueue<>(comp);
+        PriorityQueue<Node> priorityQueue = new PriorityQueue<>();
         Set<Character> keySet = weight.keySet();
         for (Character c : keySet) {
             Node Node = new Node(weight.get(c), c);
@@ -128,17 +128,5 @@ public class HuffmanCompression implements Comparator<Node> {
      */
     Map<Character, String> getCodes() {
         return charPrefixHashMap;
-    }
-
-    @Override
-    public int compare(Node node, Node t1) {
-        if(node.getWeight() == t1.getWeight()) {
-            if(t1.isLeaf()) {
-                return -1;
-            } else {
-                return node.getCharacter().compareTo(t1.getCharacter());
-            }
-        }
-        return node.getWeight() - t1.getWeight();
     }
 }
