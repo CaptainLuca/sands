@@ -1,7 +1,9 @@
 package nl.hva.ict.se.sands;
 
 public class BackwardsSearch {
+
     private int amountOfComparisons = 0;
+
     /**
      * Returns index of the right most location where <code>needle</code> occurs within <code>haystack</code>. Searching
      * starts at the right end side of the text (<code>haystack</code>) and proceeds to the first character (left side).
@@ -10,47 +12,39 @@ public class BackwardsSearch {
      * @return -1 if the <code>needle</code> is not found and otherwise the left most index of the first
      * character of the <code>needle</code>.
      */
-    int findLocation(String needle, String haystack) {
+    int findLocation(String pat, String txt) {
 
-        int text = haystack.length();
-        int pattern = needle.length();
+        int n = txt.length();
+        int m = pat.length();
         int r = 256;
         int[] left = new int[r];
 
-        for (int c = 0; c < r ; c++) {
-            left[c] = needle.length();
+        for (int c = 0; c < r; c++) {
+            left[c] = pat.length();
         }
 
-        for (int k = needle.length() - 1; k >= 0; k--) {
-            left[needle.charAt(k)] = k;
+        for (int j = pat.length() - 1; j >= 0; j--) {
+            left[pat.charAt(j)] = j;
         }
 
         int skip;
         amountOfComparisons = 0;
-
-
-        for (int i = text-pattern; i >= 0 ; i -= skip)
+        for (int i = n-m; i >= 0; i -= skip)
         {
             skip = 0;
-            for (int j = 0; j <= pattern -1; j++)  {
+            for (int j = 0; j <= m-1; j++)  {
                 amountOfComparisons++;
-                if (needle.charAt(j) != haystack.charAt(i+j))
+                if (pat.charAt(j) != txt.charAt(i+j))
                 {
-//                    skip = j - left[haystack.charAt(i+j)];
-                    skip = Math.min(pattern, left[haystack.charAt(i+j)]);
-//                    System.out.println("Skip: " + skip)
+                    skip = Math.min(m, left[txt.charAt(i+j)]);
                     break;
                 }
             }
             if (skip == 0) {
-                System.out.println("Number of comparisons: " + amountOfComparisons);
                 return i;
             }
         }
-
-        System.out.println("Number of comparisons: " + amountOfComparisons);
         return -1;
-
     }
 
     /**
@@ -60,5 +54,4 @@ public class BackwardsSearch {
     int getComparisonsForLastSearch() {
         return amountOfComparisons;
     }
-
 }
