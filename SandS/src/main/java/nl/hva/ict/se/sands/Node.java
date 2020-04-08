@@ -24,6 +24,17 @@ public class Node implements Comparable<Node> {
 
     @Override
     public int compareTo(Node o) {
+        if(this.getWeight() == o.getWeight()) {
+            if(o.isLeaf()) {
+                return -1;
+            } else if (this.getCharacter() != null && o.getCharacter() != null)  {
+                return this.getCharacter().compareTo(o.getCharacter());
+            } else if(this.getCharacter() != null && o.getCharacter() == null) {
+                return 1;
+            } else {
+                return -1;
+            }
+        }
         return this.getWeight() - o.getWeight();
     }
 
