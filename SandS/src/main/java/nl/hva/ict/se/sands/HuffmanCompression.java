@@ -66,7 +66,7 @@ public class HuffmanCompression implements Comparator<Node> {
     }
 
     private static Node buildTree(Map<Character, Integer> weight) {
-        PriorityQueue<Node> priorityQueue = new PriorityQueue<>();
+        PriorityQueue<Node> priorityQueue = new PriorityQueue<>(comp);
         Set<Character> keySet = weight.keySet();
         for (Character c : keySet) {
             Node Node = new Node(weight.get(c), c);
