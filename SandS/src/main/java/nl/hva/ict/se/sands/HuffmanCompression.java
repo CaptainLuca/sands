@@ -3,7 +3,7 @@ package nl.hva.ict.se.sands;
 import java.io.InputStream;
 import java.util.*;
 
-public class HuffmanCompression {
+public class HuffmanCompression implements Comparator<Node> {
 
     private static Map<Character, String> charPrefixHashMap = new HashMap<>();
     static Node root;
@@ -130,4 +130,15 @@ public class HuffmanCompression {
         return charPrefixHashMap;
     }
 
+    @Override
+    public int compare(Node node, Node t1) {
+        if(node.getWeight() == t1.getWeight()) {
+            if(t1.isLeaf()) {
+                return -1;
+            } else {
+                return node.getCharacter().compareTo(t1.getCharacter());
+            }
+        }
+        return node.getWeight() - t1.getWeight();
+    }
 }

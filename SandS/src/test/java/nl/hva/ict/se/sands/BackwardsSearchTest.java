@@ -16,14 +16,12 @@ public class BackwardsSearchTest {
     @Test
     public void findSingleOccurrence() {
         int index = searchEngine.findLocation("needle","whereistheneedleinthishaystack");
-
         assertEquals("whereisthe".length(), index);
     }
 
     @Test
     public void cantFindOccurrence() {
         int index = searchEngine.findLocation("needle","thereisnothinginthishaystack");
-
         assertEquals(-1, index);
     }
 
@@ -36,7 +34,6 @@ public class BackwardsSearchTest {
     @Test
     public void simpleCharacterCountBackwards() {
         searchEngine.findLocation("needle","tofindthenumberofcomparisonsweneedtoknowwheretheneedleisinthishaystack");
-
         assertEquals(9, searchEngine.getComparisonsForLastSearch());
         searchEngine.findLocation("needle", "haystackneedleneedeedle");
         assertEquals(14, searchEngine.getComparisonsForLastSearch());
@@ -45,7 +42,6 @@ public class BackwardsSearchTest {
     @Test
     public void simpleCharacterCountBackwards2() {
         searchEngine.findLocation("needle", "wheretheneedleisinthishaystackandhowmannycomparisonsareneeded");
-
         assertEquals(21, searchEngine.getComparisonsForLastSearch());
     }
 }
